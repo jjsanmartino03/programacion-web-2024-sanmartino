@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Julián Sanmartino">
+    <meta name="keywords" content="html,css,javascript">
+    <meta name="description" content="Hoja de vida de tu Nombre Apellido">
+    <title>Registro</title>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <h1>Registro en Nuestra Tienda</h1>
+            <p>
+                <label for="nombre">Nombre:</label>
+                <br />
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: luis">
+            </p>
+
+            <!-- Add in the same style inputs for "Email", "Edad", A select and a comments textbox  -->
+            <p>
+                <label for="email">Email:</label>
+                <br />
+                <input type="email" id="email" name="email" placeholder="Ej: luis@gmail.com">
+            </p>
+
+            <p>
+                <label for="edad">Edad:</label>
+                <br />
+                <input type="number" id="edad" name="edad" placeholder="Ej: 22">
+            </p>
+
+            <p>
+                <label for="recommendation">Recomendado por:</label>
+                <br />
+                <select id="recommendation" name="recommendation">
+                    <option value="0">Google</option>
+                    <option value="1">Amigos</option>
+                    <option value="2">Redes Sociales</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="terms">Género</label>
+                <br />
+                <!-- Crea radio button para el género del usuario -->
+                <input type="radio" 
+                    id="genero-masculino" 
+                    name="genero" 
+                    value="masculino">
+                <label for="genero-masculino">Masculino</label>
+                <br/>
+                <input type="radio" 
+                    id="genero-femenino" 
+                    name="genero" 
+                    value="femenino">
+                <label for="genero-femenino">Femenino</label>
+                <br/>
+                <!-- Otros -->
+                <input type="radio" 
+                    id="genero-otro" 
+                    name="genero" 
+                    value="otro">
+                <label for="genero-otro">Otro</label>
+                
+
+            </p>
+
+            <p>
+                <label for="comentarios">Comentarios:</label>
+                <br />
+                <textarea id="comentarios" name="comentarios"></textarea>
+            </p>
+
+            <!-- terms and conditions textbox -->
+            <p>
+                <label for="terms">Acepto términos y condiciones:</label>
+                <br />
+                <input type="checkbox" id="terms" name="terms">
+            </p>
+
+            <p>
+                <input type="submit" value="Registrar">
+            </p>
+        </fieldset>
+    </form>
+</body>
+
+</html>
