@@ -1,0 +1,58 @@
+
+
+.main-heading{
+    color: #5454ff;
+    text-shadow: 2px 2px 2px #a3a3a3;
+    font-style: oblique;
+    text-align: center;
+    font-family: Verdana, serif;
+}
+
+.second-heading{
+    color: #020202;
+    text-shadow: 2px 2px 2px #a3a3a3;
+    font-style: italic;
+    text-align: center;
+    font-family: Arial, serif;
+}
+
+.lista-multimedia {
+
+    color:red;
+}
+
+.lista-multimedia  a{
+    color: red;
+    margin: 1rem;
+    padding: 1rem;
+}
+.lista-multimedia  a:hover{
+    font-size: 2rem;
+    transition: 0.5s;
+}
+
+.lista-multimedia a:hover::after{
+    content: "(cuidado con los links)";
+}
+
+#title-audio{
+    color: rebeccapurple;
+}
+
+#audio a{
+    color: rebeccapurple;
+}
+
+#video-page h1{
+    color: rebeccapurple;
+    background-color: yellow;
+    width: min-content;
+}
+
+#video-page a {
+    color: rebeccapurple;
+}
+
+.map{
+    width: 100%;
+}
