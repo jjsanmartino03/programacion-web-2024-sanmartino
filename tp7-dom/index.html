@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Julián Sanmartino">
+    <meta name="keywords" content="html,css,javascript">
+    <link href="../general.css" rel="stylesheet">
+    <title>TP7 DOM | Julián Sanmartino</title>
+</head>
+
+<body style="font-family: Ubuntu, monospace">
+<main class="flex flex-center flex-col">
+    <header id="header">
+    </header>
+    <form class="gap-1 p-3 flex flex-col">
+        <div class="input-group">
+            <label for="nombre">Nombre:</label>
+            <input placeholder="Ej: Juan" type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="input-group">
+            <label for="apellido">Apellido:</label>
+            <input placeholder="Ej: Pérez" type="text" id="apellido" name="apellido" required>
+        </div>
+
+        <div class="input-group">
+            <label for="nacimiento">Fecha de nacimiento:</label>
+            <input class="nacimiento" type="date" id="nacimiento" name="nacimiento" required>
+        </div>
+
+        <div class="input-group">
+            <label for="direccion">Dirección:</label>
+            <input class="direccion" placeholder="" type="text" id="direccion" name="direccion" required>
+        </div>
+
+        <div class="input-group">
+            <label for="dni">DNI:</label>
+            <input type="text" class="dni" id="dni" name="dni" required>
+        </div>
+
+        <div id="sexo">
+
+        </div>
+
+        <button class="submit-btn btn-1" onclick="completarNombre()" type="button">Completar nombre</button>
+        <button class="submit-btn btn-2" onclick="completarDNI()" type="button">Completar DNI</button>
+        <button class="submit-btn btn-3" onclick="crearSexo()" type="button">Sexo</button>
+        <div class="flex gap-1">
+            <button class="flex w-full flex-center submit-btn btn-2" onclick="crearEncabezado()" type="button">Crear
+                Encabezado
+            </button>
+            <button class="flex w-full flex-center submit-btn btn-1" onclick="borrarEncabezado()" type="button">
+                Borrar Encabezado
+            </button>
+        </div>
+
+    </form>
+
+</main>
+<footer class="flex flex-center">
+    <p>© 2024 Julián Sanmartino. All rights reserved.</p>
+</footer>
+<style>
+    form {
+        padding: 0 5rem;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+
+        input {
+            padding: .5rem;
+            border: 1px solid lightgray;
+            border-radius: .3rem;
+            height: 1.5rem;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            border: none;
+            border-bottom: 2px solid rebeccapurple;
+            outline: none;
+        }
+    }
+
+    /*Submit Button*/
+    .submit-btn {
+        transition: 0.8s !important;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        height: 3rem;
+        border-radius: .5rem;
+        cursor: pointer;
+    }
+
+    .btn-1 {
+        background-color: rebeccapurple;
+        border-color: #9e6bd1 !important;
+    }
+
+    .btn-2 {
+        background-color: #950000;
+        border-color: #8f3a3a;
+    }
+
+    .btn-3 {
+        background-color: #000;
+        border-color: #000;
+    }
+
+    .submit-btn:hover::before {
+        height: 180%;
+    }
+
+    .submit-btn.btn-1:hover {
+        color: rebeccapurple;
+    }
+
+    .submit-btn.btn-2:hover {
+        color: #950000;
+    }
+
+    .submit-btn.btn-3:hover {
+        color: #252525;
+    }
+
+    .submit-btn::before {
+        transition: 0.8s;
+        content: "";
+        position: absolute;
+        background: #fff;
+        left: 0;
+        width: 100%;
+        height: 0%;
+
+        z-index: -1;
+        top: 0;
+        border-radius: 0 0 50% 50%;
+    }
+</style>
+<script>
+    function completarNombre() {
+        const nombre = document.getElementById('nombre');
+        const apellido = document.getElementById('apellido');
+        nombre.value = 'Julián';
+        apellido.value = 'Sanmartino';
+    }
+
+    function completarDNI() {
+        const dni = document.getElementsByClassName('dni')[0];
+        dni.value = '12345678';
+
+        const direccion = document.getElementsByClassName('direccion')[0];
+        direccion.value = 'Av. Siempreviva 742';
+
+        const nacimiento = document.getElementsByClassName('nacimiento')[0];
+        nacimiento.value = '1990-01-01';
+    }
+
+    function crearSexo() {
+        const sexoContainer = document.getElementById('sexo');
+
+        if (sexoContainer.children.length){
+            return
+        }
+
+        const options = [
+            {value: 'masculino', label: 'Masculino'},
+            {value: 'femenino', label: 'Femenino'},
+        ]
+
+        for (let option of options) {
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'sexo';
+            radio.value = option.value;
+            radio.id = option.value;
+
+            const label = document.createElement('label');
+            label.htmlFor = option.value;
+            label.textContent = option.label;
+
+            sexoContainer.appendChild(radio);
+            sexoContainer.appendChild(label);
+        }
+    }
+
+    function crearEncabezado() {
+        const header = document.getElementById('header');
+        const h1 = document.createElement('h1');
+        h1.innerText = 'Datos Personales';
+
+        header.appendChild(h1);
+    }
+
+    function borrarEncabezado() {
+        const header = document.getElementById('header');
+
+        for (let child of header.children) {
+            header.removeChild(child)
+        }
+    }
+
+</script>
+</body>
+</html>

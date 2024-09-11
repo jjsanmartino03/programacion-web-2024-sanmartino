@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Jesica Hainch">
+    <title>Métodos del DOM</title>
+</head>
+
+<body>
+<header>
+</header>
+<form id="form1"></form>
+<form id="form2"></form>
+
+<button onclick="contarForms()">contar formularios</button>
+<input type="button" value="Crear header" onclick="crearEncabezado()">
+<button onclick="borrarVarios()">Borrar header</button>
+
+<hr>
+
+<p id="idP">Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde earum commodi rem maiores ut omnis a ab. Quas consequatur nostrum libero, corporis atque, praesentium eveniet non blanditiis magnam molestiae at.</p>
+
+<button onclick="borrarElemento()">borrar párrafo</button>
+
+<input type="button" value="Cambiar texto" onclick="cambiarTexto()">
+<hr>
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae iure id porro saepe praesentium doloremque distinctio tempora, est eum consectetur, minima delectus commodi modi, impedit eveniet voluptatibus recusandae sequi quia.
+</p>
+<p class="clase-texto">
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis aut eaque veniam? Minima voluptatem optio id perspiciatis nostrum magnam dolore, debitis ut. Enim tempore cum unde velit magnam neque alias?
+</p>
+<button onclick="cambiarColor()">Cambiar color</button>
+<hr>
+
+
+<h3>Selecciones una ciudad</h3>
+<input type="radio" id="radio1" name="input-radio">San Francisco <br>
+<input type="radio" id="radio2" name="input-radio">Córdoba <br>
+<input type="radio" id="radio3" name="input-radio">Santa Fé <br>
+
+<button onclick="contarElementos()">Contar radio-button</button>
+
+<button onclick="cambiarFuente()">Cambiar Fuente</button>
+
+
+<script>
+    // acceder a traves de getElementById y aplicamos el innerHTML
+    function cambiarTexto(){
+        var elemento = document.getElementById('idP');
+        elemento.innerHTML = "Texto cambiado";
+
+        // Cambiamos el color usando setAttribute
+        elemento.setAttribute('style','background-color:violet');
+    }
+
+    // acceder a traves de getElementsByTagName//
+    function cambiarColor(){
+        var elementos = document.getElementsByTagName('p');
+        for(var i= 0; i < elementos.length; i++){
+            elementos[i].style.color = 'red';
+        }
+    }
+
+    //acceder a traves de getElementsByName
+    function contarElementos(){
+        var cantidad = document.getElementsByName('input-radio').length;
+        alert('La cantidad de radio button es ' + cantidad);
+    }
+
+    // acceder a travez de la clase con getElementsByClassName
+    function cambiarFuente(){
+        var elementos = document.getElementsByClassName('clase-texto');
+        for(var i= 0; i < elementos.length; i++){
+            elementos[i].style.fontFamily ='Verdana';
+        }
+    }
+
+    // crear elementos del DOM
+    function crearEncabezado(){
+        var elementos = document.getElementsByTagName('header');
+        var encab = document.createElement('h1');
+        var texto = document.createTextNode('Titulo principal');
+        encab.appendChild(texto);
+        //h2
+        var subtitulo = document.createElement('h2');
+        var textoSub = document.createTextNode('Subtitulo principal');
+        subtitulo.appendChild(textoSub);
+        // forma de agregar elementos a la etiqueta h1
+        // elementos[0].appendChild(encab);
+        // cuando tengo mas elemento para agregar
+        for(var i= 0; i< elementos.length;i++){
+            elementos[i].appendChild(encab);
+            elementos[i].appendChild(subtitulo);
+        }
+    }
+
+    function borrarElemento(){
+        var elemento = document.getElementById('idP');
+        // para borrar un elemento
+        elemento.removeChild(elemento.childNodes[0]);
+    }
+    function borrarVarios(){
+        var elementos = document.getElementsByTagName('header');
+        //para ir borrando varios elementos, de una por vez
+        for(var i= 0; i< elementos.length;i++){
+            elementos[i].removeChild(elementos[i].childNodes[i]);
+        }
+    }
+    function contarForms(){
+        var elementos = document.getElementsByTagName('form');
+        alert('La cantidad de Forms es ' + elementos.length);
+    }
+</script>
+</body>
+</html>
