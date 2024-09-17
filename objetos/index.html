@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Julián Sanmartino">
+    <meta name="keywords" content="html,css,javascript">
+    <link href="../general.css" rel="stylesheet">
+    <title>Objetos | Julián Sanmartino</title>
+</head>
+<body>
+<main class="flex-center w-full flex-col gap-2">
+    <button id="boton1">Enviar</button>
+    <button id="boton2">Enviar nuevo</button>
+    <button id="boton3">Enviar nuevo 2</button>
+    <button id="boton4">Enviar Anidados</button>
+</main>
+<script>
+    let persona = {
+        nombre: 'Julián',
+        apellido: 'Sanmartino',
+        edad: 24,
+        moto: {
+            marca: 'Honda',
+            modelo: 2018,
+            cilindrada: 600
+        },
+        mostrarNombre: function () {
+            alert(`Hola, soy ${this.nombre} ${this.apellido}`);
+        },
+        cambiarNombre: function (nuevoNombre) {
+            this.nombre = nuevoNombre;
+        }
+    }
+
+    persona.mostrarNombre()
+    persona.cambiarNombre('Juan')
+    persona.mostrarNombre()
+</script>
+</body>
+</html>

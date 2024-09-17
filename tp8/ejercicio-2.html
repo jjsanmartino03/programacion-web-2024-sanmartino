@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Julián Sanmartino">
+    <meta name="keywords" content="html,css,javascript">
+    <link href="../general.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <title>TP8 Ejercicio 2 | Julián Sanmartino</title>
+</head>
+
+<body style="font-family: Ubuntu, monospace">
+<main class="flex flex-center flex-col">
+    <header id="header">
+        <h1>Ejercicio 2</h1>
+    </header>
+    <form>
+        <p id="parrafo-1">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc tincidunt tincidunt. Sed
+            nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc
+            tincidunt tincidunt. Sed nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc tincidunt tincidunt.
+            Sed nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc
+        </p>
+        <div class="input-group">
+            <label for="nombre" id="nombre-label">Nombre:</label>
+            <input placeholder="Ej: Juan" type="text" id="nombre" name="nombre" required>
+        </div>
+        <button id="boton" type="button">Modificar</button>
+    </form>
+</main>
+<script>
+    // ejercicio 2
+    const getById = (id) => {
+        return document.getElementById(id);
+    }
+    const parrafo1 = getById('parrafo-1');
+    console.log('<p> con id "parrafo-1":', parrafo1);
+
+    const labelNombre = getById('nombre-label');
+    console.log('<label> con id "nombre-label":', labelNombre);
+
+    const inputNombre = getById('nombre');
+    console.log('<input> con id "nombre":', inputNombre);
+
+    const button = document.getElementById('boton');
+    button.addEventListener('click', () => {
+        parrafo1.textContent = `Hola, mi nombre es ${inputNombre.value}`;
+        labelNombre.textContent = 'Nuevo nombre:';
+        inputNombre.value = 'Value ingresado por JS';
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Julián Sanmartino">
+    <meta name="keywords" content="html,css,javascript">
+    <link href="../general.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <title>TP8 Ejercicio 1 | Julián Sanmartino</title>
+</head>
+
+<body style="font-family: Ubuntu, monospace">
+<main class="flex flex-center flex-col">
+    <nav class="flex gap-2 p-1">
+        <a href="https://www.google.com" target="_blank">Google</a>
+        <a href="https://www.facebook.com" target="_blank">Facebook</a>
+        <a href="https://www.twitter.com" target="_blank">Twitter</a>
+        <a href="https://www.youtube.com" target="_blank">Youtube</a>
+    </nav>
+    <header id="header">
+        <h1>Ejercicio 1</h1>
+    </header>
+</main>
+<script>
+    const showLinksCount = () => {
+        const links = document.getElementsByTagName('a');
+        alert(`Hay ${links.length} links en la página.`);;
+    }
+    showLinksCount();
+</script>
+</body>
+</html>

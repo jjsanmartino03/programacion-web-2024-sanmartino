@@ -1,0 +1,19 @@
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+
+    input {
+        padding: .5rem;
+        border: 1px solid lightgray;
+        border-radius: .3rem;
+        height: 1.5rem;
+        font-size: 1rem;
+    }
+
+    input:focus {
+        border: none;
+        border-bottom: 2px solid rebeccapurple;
+        outline: none;
+    }
+}

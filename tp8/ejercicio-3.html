@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Julián Sanmartino">
+    <meta name="keywords" content="html,css,javascript">
+    <link href="../general.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <title>TP8 Ejercicio 3 | Julián Sanmartino</title>
+</head>
+
+<body style="font-family: Ubuntu, monospace">
+<main class="flex flex-center flex-col">
+    <header id="header">
+        <h1>Ejercicio 3</h1>
+    </header>
+    <section>
+        <p id="parrafo-1">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc tincidunt tincidunt. Sed
+            nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc
+            tincidunt tincidunt. Sed nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc tincidunt tincidunt.
+            Sed nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc tincidunt tincidunt. Sed nec nunc nec nunc
+        </p>
+    </section>
+    <section>
+        <h2>Ejercicio 3</h2>
+        <form id="formulario" class="gap-1 p-1 flex flex-col">
+            <div class="input-group">
+                <label for="nombre" id="nombre-label">Nombre:</label>
+                <input placeholder="Ej: Juan" type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="input-group">
+                <label for="apellido">Apellido:</label>
+                <input placeholder="Ej: Pérez" type="text" id="apellido" name="apellido" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Apellido:</label>
+                <input placeholder="Ej: Pérez" type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="comentario">Comentario:</label>
+                <textarea placeholder="Ej: Pérez"  id="comentario" name="comentario" required></textarea>
+            </div>
+            <button type="button" onclick="contarElementos()">Enviar Formulario</button>
+        </form>
+    </section>
+</main>
+<script>
+    const contarElementos = () => {
+        const inputs = contarElemento('input');
+        const labels = contarElemento('label');
+        const paragraphs = contarElemento('p');
+        alert(`Hay ${inputs} inputs, ${labels} labels y ${paragraphs} párrafos en la página.`);
+    }
+
+    const contarElemento = (tag) => {
+        const elementos = document.getElementsByTagName(tag);
+        return elementos.length;
+    }
+
+
+</script>
+</body>
+</html>
