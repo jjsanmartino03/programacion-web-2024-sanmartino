@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Julián Sanmartino">
+    <meta name="keywords" content="html,css,javascript">
+    <link href="../general.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <title>TP8 Ejercicio 5 | Julián Sanmartino</title>
+</head>
+
+<body style="font-family: Ubuntu, monospace">
+<main class="flex flex-center flex-col">
+    <header id="header">
+        <h1>Ejercicio 5</h1>
+    </header>
+    <section class="flex flex-col p-2">
+        <h2>Tabla de productos</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody id="products-table-body">
+            </tbody>
+        </table>
+        <div >
+            <label for="total">Total:</label>
+            <input type="number" id="total" name="total">
+        </div>
+        <button id="calculate" onclick="calculateSubtTotals()">Calcular subtotales</button>
+        <button id="calculate-total" onclick="calculateTotals()">Calcular total</button>
+    </section>
+</main>
+<script>
+    let products = [
+        {name: "Camisa", price: 30000},
+        {name: "Gorra", price: 50000},
+        {name: "Zapatos", price: 60000},
+        {name: "Pantalón", price: 80000}
+    ]
+
+    const renderTable = () => {
+        const tableBody = document.getElementById('products-table-body');
+        for (const product of products) {
+            let tr = document.createElement('tr');
+            let tdProduct = document.createElement('td');
+            let tdPrice = document.createElement('td');
+            let tdQuantity = document.createElement('td');
+            let tdSubtotal = document.createElement('td');
+
+            tdProduct.textContent = product.name;
+            let priceInput = document.createElement('input');
+            priceInput.id = product.name + '-price';
+            priceInput.type = 'number';
+            priceInput.value = product.price;
+            priceInput.disabled = true;
+            tdPrice.appendChild(
+                priceInput
+            );
+
+            let quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.value = 0;
+            quantityInput.id = product.name + '-quantity';
+            tdQuantity.appendChild(
+                quantityInput
+            );
+
+            let subtotalInput = document.createElement('input');
+            subtotalInput.type = 'number';
+            subtotalInput.value = 0;
+            subtotalInput.id = product.name + '-subtotal';
+            subtotalInput.disabled = true;
+            tdSubtotal.appendChild(
+                subtotalInput
+            );
+
+
+            tr.append(
+                tdProduct,
+                tdPrice,
+                tdQuantity,
+                tdSubtotal
+            );
+            tableBody.appendChild(tr);
+        }
+
+    }
+
+    const calculateSubtTotals = () => {
+        let subTotals = []
+        for (const product of products) {
+            let quantity = document.getElementById(product.name + '-quantity').value;
+            let price = document.getElementById(product.name + '-price').value;
+            let subtotal = quantity * price;
+            document.getElementById(product.name + '-subtotal').value = subtotal;
+            subTotals.push(subtotal)
+        }
+        return subTotals
+    }
+
+    const calculateTotals = () => {
+        let subTotals = calculateSubtTotals()
+        let total = 0;
+
+        for (const subtotal of subTotals) {
+            total += subtotal
+        }
+        const totalInput = document.getElementById('total');
+        totalInput.value = total;
+    }
+    renderTable()
+
+</script>
+</body>
+</html>
