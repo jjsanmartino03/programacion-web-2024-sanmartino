@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Julián Sanmartino">
+    <meta name="keywords" content="html,css,javascript">
+    <link href="../general.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+
+    <title>TP10 Storage | Julián Sanmartino</title>
+</head>
+
+<body>
+<main class="container">
+    <header id="header" class="row center center-align">
+        <h2>Lista de Tareas</h2>
+    </header>
+    <section>
+        <form class="col s12" id="form" id="form-datos">
+            <div class="row center">
+                <div class="input-field col s12 l5">
+                    <input required placeholder="Ingresa el DNI" id="dni" type="text" class="validate">
+                    <label for="dni">DNI</label>
+                </div>
+                <div class="input-field col s12 l5 ">
+                    <input required placeholder="Ingresa el nombre" id="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="input-field col s12 l5 ">
+                    <input required placeholder="Ingresa el apellido" id="apellido" type="text" class="validate">
+                    <label for="apellido">Apellido</label>
+                </div>
+                <div class="input-field col s12 l5 ">
+                    <input placeholder="Ingresa la direccion" id="direccion" type="text" class="validate">
+                    <label for="direccion">Dirección</label>
+                </div>
+                <div class="input-field col s12 l5 ">
+                    <input placeholder="Ingresa la direccion" id="codpostal" type="number" class="validate">
+                    <label for="codpostal">Código postal</label>
+                </div>
+
+
+                <div class="input-field col s12 l2 ">
+                    <button class="btn waves-effect waves-light" id="add-persona" type="submit">Agregar
+                        <i class="material-icons right">add</i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+    <section class="col s12">
+        <ul id="personas-list" class="collection">
+
+        </ul>
+        <div class="row">
+            <div class="col center s12">
+            <button class="btn center   waves-effect waves-light" id="clear-all" type="button">Eliminar todo
+                <i class="material-icons right">delete</i>
+            </button>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="flex flex-center">
+    <p>© 2024 Julián Sanmartino. All rights reserved.</p>
+</footer>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

@@ -81,3 +81,11 @@
 .w-full{
     width: 100%;
 }
+
+.v-align-center {
+    vertical-align: middle;
+}
+
+.display-none{
+    display: none!important;
+}
