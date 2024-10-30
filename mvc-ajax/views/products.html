@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Importando Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <title>Productos</title>
+</head>
+<body>
+
+<!-- Include the navbar -->
+<div id="navbar"></div>
+
+<div class="container">
+    <h2>Lista de Productos</h2>
+    <ul id="product-list"></ul>
+
+    <form id="product-form">
+        <input type="text" id="name" placeholder="Nombre" required>
+        <input type="text" id="description" placeholder="Descripción" required>
+        <input type="number" id="price" placeholder="Precio" required>
+        <input type="number" id="stock" placeholder="Stock" required>
+        <button type="submit" class="btn">Añadir Producto</button>
+    </form>
+</div>
+
+<div id="edit-product-modal" class="modal">
+    <div class="modal-content">
+        <h4>Editar Producto</h4>
+        <form id="edit-product-form">
+            <input type="hidden" id="edit-id">
+            <div class="input-field">
+                <input type="text" id="edit-name" required>
+                <label for="edit-name">Nombre</label>
+            </div>
+            <div class="input-field">
+                <input type="text" id="edit-description" required>
+                <label for="edit-description">Descripción</label>
+            </div>
+            <div class="input-field">
+                <input type="number" id="edit-price" required>
+                <label for="edit-price">Precio</label>
+            </div>
+            <div class="input-field">
+                <input type="number" id="edit-stock" required>
+                <label for="edit-stock">Stock</label>
+            </div>
+            <button type="submit" class="btn">Guardar Cambios</button>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-close btn red">Cancelar</button>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirm-delete-modal" class="modal">
+    <div class="modal-content">
+        <h4>Confirmar Eliminación</h4>
+        <p>¿Estás seguro de que deseas eliminar este producto?</p>
+    </div>
+    <div class="modal-footer">
+        <button id="confirm-delete-btn" class="btn red">Eliminar</button>
+        <button class="modal-close btn">Cancelar</button>
+    </div>
+</div>
+
+<script src="/js/ajax-products.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    // Load the navbar
+    fetch('/navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar').innerHTML = data;
+        });
+</script>
+</body>
+</html>

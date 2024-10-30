@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Importando Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <title>Tiendas</title>
+</head>
+<body>
+
+<!-- Include the navbar -->
+<div id="navbar"></div>
+
+<div class="container">
+    <h2>Lista de Tiendas</h2>
+    <ul id="tienda-list" class="collection"></ul>
+
+    <form id="tienda-form">
+        <div class="input-field">
+            <input type="text" id="nombre" required>
+            <label for="nombre">Nombre</label>
+        </div>
+        <div class="input-field">
+            <input type="text" id="ciudad" required>
+            <label for="ciudad">Ciudad</label>
+        </div>
+        <div class="input-field">
+            <input type="text" id="duenio" required>
+            <label for="duenio">Duenio</label>
+        </div>
+        <button type="submit" class="btn">Añadir Tienda</button>
+    </form>
+</div>
+
+<div id="edit-tienda-modal" class="modal">
+    <div class="modal-content">
+        <h4>Editar Tienda</h4>
+        <form id="edit-tienda-form">
+            <input type="hidden" id="edit-id">
+            <div class="input-field">
+            <input type="text" id="edit-nombre" required>
+            <label for="edit-nombre">Nombre</label>
+        </div>
+            <div class="input-field">
+            <input type="text" id="edit-ciudad" required>
+            <label for="edit-ciudad">Ciudad</label>
+        </div>
+            <div class="input-field">
+            <input type="text" id="edit-duenio" required>
+            <label for="edit-duenio">Duenio</label>
+        </div>
+            <button type="submit" class="btn">Guardar Cambios</button>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-close btn red">Cancelar</button>
+    </div>
+</div>
+
+<script src="/js/ajax-tienda.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    // Load the navbar
+    fetch('/navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar').innerHTML = data;
+        });
+</script>
+</body>
+</html>
