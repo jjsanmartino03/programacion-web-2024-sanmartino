@@ -1,4 +1,4 @@
-import UserPagesList from "@/app/dashboard/ui";
+import UserPagesList from "@/app/app/dashboard/ui";
 import {getPagesFromCurrentUser} from "@/app/api/pages/route";
 import {Page} from "@/types/common";
 

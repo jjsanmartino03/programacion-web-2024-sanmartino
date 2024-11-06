@@ -1,30 +1,25 @@
 'use client'
 
-import {useEffect, useState} from "react";
-import {Edit, Link, QrCode, Search, Trash2} from "lucide-react";
+import {useState} from "react";
+import {Edit, Link as IconLink, QrCode, Search, Trash2} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Button} from "@/components/ui/button";
 import {Page} from "@/types/common";
-import {useSession} from "next-auth/react";
+import {usePagesQuery} from "@/queries/pages";
+import Link from "next/link";
 
 
-export default function UserPagesList({pages: pagesProp}: { pages: Page[] }) {
-
-  const session = useSession();
-  const [pages, setPages] = useState<Page[]>(pagesProp)
+export default function UserPagesList({pages: pagesProp}: { pages?: Page[] }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
 
+  const {data: pages} = usePagesQuery(pagesProp);
 
-  useEffect(() => {
-    console.log(session);
-  }, [session])
-
-  const filteredPages = pages.filter(page =>
+  const filteredPages = pages ? pages.filter(page =>
     page.title.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  ) : [];
 
   const paginatedPages = filteredPages.slice(
     (currentPage - 1) * itemsPerPage,
@@ -40,10 +35,6 @@ export default function UserPagesList({pages: pagesProp}: { pages: Page[] }) {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage)
-  }
-
-  const handleDelete = (id: number) => {
-    setPages(pages.filter(page => page.id !== id))
   }
 
   const handleGetLink = (url: string) => {
@@ -86,22 +77,20 @@ export default function UserPagesList({pages: pagesProp}: { pages: Page[] }) {
         </TableHeader>
         <TableBody>
           {paginatedPages.map((page) => (
-            <TableRow key={page.id}>
+            <TableRow key={page._id}>
               <TableCell className="font-medium">{page.title}</TableCell>
               <TableCell className="text-right">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleGetLink(page.url)}
+                <Link
+                  href={'/p/' + page.shortId}
                   className="mr-2"
                 >
-                  <Link className="h-4 w-4"/>
+                  <IconLink className="h-4 w-4" href={'/p/' + page.shortId}/>
                   <span className="sr-only">Get Link</span>
-                </Button>
+                </Link>
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleGetQR(page.id)}
+                  onClick={() => handleGetQR(page._id)}
                   className="mr-2"
                 >
                   <QrCode className="h-4 w-4"/>
@@ -110,7 +99,7 @@ export default function UserPagesList({pages: pagesProp}: { pages: Page[] }) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleEdit(page.id)}
+                  onClick={() => handleEdit(page._id)}
                   className="mr-2"
                 >
                   <Edit className="h-4 w-4"/>
@@ -119,7 +108,7 @@ export default function UserPagesList({pages: pagesProp}: { pages: Page[] }) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleDelete(page.id)}
+                  onClick={() => alert('eliminando')}
                 >
                   <Trash2 className="h-4 w-4"/>
                   <span className="sr-only">Delete</span>

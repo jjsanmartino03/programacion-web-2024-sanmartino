@@ -4,8 +4,6 @@ import clientPromise from "@/lib/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {compare} from "bcrypt";
 import {CustomSession} from "@/types/common";
-import {JWT, JWTEncodeParams} from "next-auth/jwt";
-import jwt from 'jsonwebtoken';
 
 export const authOptions: AuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -19,7 +17,6 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         const client = await clientPromise;
         const usersCollection = client.db().collection("users");
-        console.log(credentials)
         if (!credentials) return null;
 
         const user = await usersCollection.findOne({email: credentials.email});
@@ -34,18 +31,6 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   jwt: {
-    async encode(params: JWTEncodeParams) {
-      return jwt.sign({
-          ...params.token,
-        },
-        params.secret as string, );
-    },
-    async decode(params) {
-      return {
-        ...jwt.verify(params.token as string, params.secret as string) as JWT,
-        token: params.token
-      }
-    },
 
 
     // The maximum age of the NextAuth.js issued JWT in seconds.
@@ -57,21 +42,18 @@ export const authOptions: AuthOptions = {
     error: "/auth/error"
   },
   callbacks: {
-    async jwt({token, user, session, account}) {
+    async jwt({token, user}) {
       if (user) {
         token.id = user.id;
       }
-      console.log(session, 'session');
 
       return token;
     },
     session({session, token}): CustomSession {
-      console.log(session);
-      console.log(token, 'token');
+
       const customSession: CustomSession = {
         ...session,
-        user: {email: session.user?.email,},
-        token: token.token as string
+        user: {email: session.user?.email},
       };
       if (token?.id) {
         customSession.user.id = token.id as string;

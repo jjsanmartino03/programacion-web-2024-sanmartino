@@ -1,26 +1,27 @@
 'use client'
 
-import { useState } from 'react'
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import {useState} from 'react'
+import {signIn} from 'next-auth/react'
+import {useRouter} from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import {Button} from "@/components/ui/button"
+import {Input} from "@/components/ui/input"
+import {Label} from "@/components/ui/label"
+import {Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} from "@/components/ui/card"
 import {CircleIcon} from "lucide-react";
+import {useSignupMutation} from "@/queries/auth";
 
-export default function LoginPage() {
+export default function LoginPage({type}: { type: 'signin' | 'signup' }) {
+  const isLogin = type === 'signin'
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const {mutateAsync} = useSignupMutation()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-
+  const login = async () => {
     const result = await signIn('credentials', {
       redirect: false,
       email,
@@ -31,14 +32,37 @@ export default function LoginPage() {
       // Handle error (e.g., show error message)
       console.error(result.error)
     } else {
-      router.push('/dashboard') // Redirect to dashboard on successful login
+      router.push('/app/dashboard') // Redirect to dashboard on successful login
+    }
+  }
+
+  const signup = async () => {
+    // Implement signup logic here
+    const result = await mutateAsync({
+      email,
+      password
+    });
+
+    if (result.data) {
+      await login()
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+
+    if (isLogin) {
+      await login()
+    } else {
+      await signup()
     }
 
     setIsLoading(false)
   }
 
   const handleGoogleLogin = () => {
-    signIn('google', { callbackUrl: '/dashboard' })
+    signIn('google', {callbackUrl: '/dashboard'})
   }
 
   return (
@@ -85,17 +109,17 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? (
                 <>
-                 <CircleIcon className="mr-2 h-4 w-4 animate-spin" />
-                  Logging in...
+                  <CircleIcon className="mr-2 h-4 w-4 animate-spin"/>
+                  {isLogin ? 'Logging in...' : 'Signing up...'}
                 </>
               ) : (
-                'Log in'
+                isLogin ? 'Log in' : 'Sign Up'
               )}
             </Button>
           </form>
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
+              <span className="w-full border-t"/>
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
@@ -107,13 +131,10 @@ export default function LoginPage() {
           </Button>
         </CardContent>
         <CardFooter className="flex flex-col space-y-2">
-          <Link href="/forgot-password" className="text-sm text-primary hover:underline">
-            Forgot password?
-          </Link>
           <p className="text-sm text-center text-muted-foreground">
-            Don't have an account?{' '}
-            <Link href="/signup" className="text-primary hover:underline">
-              Sign up
+            {isLogin ? 'Don\'t have an account?' : 'Already have an account?'}{' '}
+            <Link href={isLogin ? './signup' : './signin'} className="text-primary hover:underline">
+              {isLogin ? 'Sign up' : 'Sign in'}
             </Link>
           </p>
         </CardFooter>
