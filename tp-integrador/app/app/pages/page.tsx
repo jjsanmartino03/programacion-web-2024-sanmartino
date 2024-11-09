@@ -1,9 +1,13 @@
 import UserPagesList from "@/app/app/pages/ui";
-import {getPagesFromCurrentUser} from "@/app/api/pages/route";
-import {Page} from "@/types/common";
+import {getPagesFromCurrentUser} from "@/app/api/pages";
+import {Page, Tag} from "@/types/common";
+import {getAllTags} from "@/app/api/tags/tags";
 
 // Mock data for demonstration
 export default async function UserDashboard() {
-  const pages: Page[] = await getPagesFromCurrentUser();
-  return <UserPagesList pages={pages}/>
+  const pagesPromise: Promise<Page[]> = getPagesFromCurrentUser();
+  const tagsPromise: Promise<Tag[]> = getAllTags();
+
+  const [pages, tags] = await Promise.all([pagesPromise, tagsPromise]);
+  return <UserPagesList pages={pages} tags={tags}/>
 }

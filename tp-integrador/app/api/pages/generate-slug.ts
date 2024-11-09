@@ -19,7 +19,7 @@ export const isSlugUnique = async (slug: string): Promise<boolean> => {
 };
 
 export const generateUniqueSlug = async (title: string): Promise<string> => {
-  let slug = generateSlug(title);
+  const slug = generateSlug(title);
   let uniqueSlug = slug;
   let counter = 1;
 

@@ -1,8 +1,4 @@
-import React, {CSSProperties, useState} from 'react';
-import ReactMarkdown from 'react-markdown';
-import {Prism as SyntaxHighlighter, SyntaxHighlighterProps} from 'react-syntax-highlighter';
-
-import {materialDark} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import React, {useState} from 'react';
 import MarkdownRenderer from "@/components/markdwon/renderer";
 
 type MarkdownEditorProps = {
@@ -25,7 +21,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({value, onChange}) => {
       </div>
       {isPreview ? (
         <div className={'p-2 border rounded max-h-80 overflow-auto'}>
-        <MarkdownRenderer content={value} />
+          <MarkdownRenderer content={value}/>
         </div>
       ) : (
         <textarea

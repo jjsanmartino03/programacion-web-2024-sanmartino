@@ -1,7 +1,7 @@
-import {getPageBySlug} from "@/app/api/pages/route";
+import {getPageBySlug} from "@/app/api/pages";
 import NotFound from "next/dist/client/components/not-found-error";
 import PageView from "@/app/pages/[slug]/ui";
-import {getUserEmailByUserId} from "@/app/api/users/route";
+import {getUserEmailByUserId} from "@/app/api/users";
 
 export default async function Page({
                                      params

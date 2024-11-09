@@ -1,13 +1,13 @@
 import {NextRequest, NextResponse} from "next/server";
-import {getPageById} from "@/app/api/pages/route";
+import {getPageById} from "@/app/api/pages";
 import {CustomSession, Page} from "@/types/common";
 import {CreatePageSchema} from "@/schemas/common";
 import clientPromise from "@/lib/db";
 import {ObjectId} from "bson";
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
+import {authOptions} from "@/app/api/auth/[...nextauth]/auth-options";
 
-export const updatePage = async (originalPage: Page, data: Partial<Page>) => {
+const updatePage = async (originalPage: Page, data: Partial<Page>) => {
   // Update the page
   const client = await clientPromise
 

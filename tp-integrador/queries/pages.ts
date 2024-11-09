@@ -3,11 +3,15 @@ import axios from "axios";
 import {Page} from "@/types/common";
 import {toast} from "@/hooks/use-toast";
 
-export const usePagesQuery = (defaultPages?: Page[]) => useQuery<Page[]>({
-  queryKey: ['pages'],
+export const usePagesQuery = (keyword: string, defaultPages?: Page[]) => useQuery<Page[]>({
+  queryKey: ['pages', keyword],
   initialData: defaultPages,
   queryFn: async () => {
-    const response = await axios.get('/api/pages');
+    const response = await axios.get(`/api/pages`, {
+      params: {
+        keyword
+      }
+    });
     return response.data;
   }
 });

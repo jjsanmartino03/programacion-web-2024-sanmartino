@@ -1,4 +1,4 @@
-import {getPageByShortId} from "@/app/api/pages/route";
+import {getPageByShortId} from "@/app/api/pages";
 import NotFound from "next/dist/client/components/not-found-error";
 import {redirect} from "next/navigation";
 

@@ -46,18 +46,19 @@ lo que sea. Incluso un QR para identificar a una mascota.
 ### Tareas bajo nivel 9/11  
 - [x] Agregar editor de markdown
 - [x] Agregar la funcionalidad de eliminar una página
-- [ ] Asignarle un slug a una página, y redirigir a esta luego de
+- [x] Asignarle un slug a una página, y redirigir a esta luego de
     acceder al shortLink
-- [ ] Embellecer la previsualización de una página
-- [ ] Agregar la funcionalidad de descarga de QR
-- [ ] Crear entidad carpetas para las páginas. Se puede guardar una
-carpeta dentro de otra, y así sucesivamente. Esto para que el usuario
-pueda organizar sus páginas.
-- [ ] Actualizar el listado de páginas para usar carpetas
+- [x] Embellecer la previsualización de una página
+- [x] Agregar la funcionalidad de descarga de QR
+- [x] Crear entidad categorías para las páginas.
+- [x] Actualizar el listado de páginas para usar categorías
+- [ ] Deployar en Vercel
 - [ ] Agregar templates para cada página, para embellecer la visualización
 - [ ] Agregar layout para mejorar la interfaz
 - [ ] Guardar número de visitas de cáda página
 - [ ] Listar páginas públicas al inicio
+- [ ] Traducir todo al español
+- [ ] Título de cada página
 - [ ] Login con Google
 
 ## Entidades

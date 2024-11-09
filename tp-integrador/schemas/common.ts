@@ -5,4 +5,10 @@ export const CreatePageSchema = z.object({
   imageUrl: z.optional(z.string()),
   isPublic: z.boolean(),
   markdown: z.string(),
+  tags: z.array(z.string()),
 })
+
+
+export const CreateTagSchema = z.object({
+  name: z.string(),
+});

@@ -1,29 +1,51 @@
 'use client'
 
-import {useState} from "react";
-import {Edit, Link as IconLink, QrCode, Search, Trash2} from "lucide-react";
+import QRCodeModal from "@/components/qr/modal";
+import {useCallback, useState} from "react";
+import {Edit, Link as IconLink, QrCode, Trash2} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Button} from "@/components/ui/button";
-import {Page} from "@/types/common";
+import {Page, Tag} from "@/types/common";
 import {usePagesQuery, useDeletePageMutation} from "@/queries/pages";
 import {useRouter} from "next/navigation";
 import ConfirmationModal from "@/components/modals/confirmation";
+import {useTagsQuery} from "@/queries/tags";
 
-export default function UserPagesList({pages: pagesProp}: { pages?: Page[] }) {
+
+export default function UserPagesList({pages: pagesProp, tags: tagsProp}: { pages?: Page[], tags?: Tag[] }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [pageToDelete, setPageToDelete] = useState<string | null>(null);
+  const [qrPageUrl, setQrPageUrl] = useState<{
+    url: string, filename: string
+  } | null>(null);
+  const [searchParam, setSearchParam] = useState<string>('');
+  const {data: tags} = useTagsQuery(tagsProp);
   const router = useRouter();
-  const {data: pages, refetch: refetchPages} = usePagesQuery(pagesProp);
+  const {data: pages, refetch: refetchPages} = usePagesQuery(searchParam, pagesProp);
   const {isPending: deleteIsPending, ...deleteMutation} = useDeletePageMutation();
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
-  const handleGetQR = (id: string) => {
-    console.log('Generating QR code for page ID:', id);
+  const onSearch = () => {
+    setSearchParam(searchQuery)
+  }
+
+  const handleGetQR = (shortId: string, slug: string) => {
+    setQrPageUrl({
+      url: `${window.location.origin}/p/${shortId}`,
+      filename: slug
+    })
   };
+
+  const getNameForTagId = useCallback((tagId: string) => {
+    if (tags) {
+      const tag = tags.find(t => t._id === tagId);
+      return tag?.name;
+    }
+  }, [tags])
 
   const handleEdit = (id: string) => {
     router.push('/app/pages/' + id + '/edit');
@@ -51,29 +73,42 @@ export default function UserPagesList({pages: pagesProp}: { pages?: Page[] }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Your Pages</h1>
-      <div className="mb-6">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"/>
-          <Input
-            type="text"
-            placeholder="Search pages..."
-            value={searchQuery}
-            onChange={handleSearch}
-            className="pl-10 w-full"
-          />
-        </div>
+      <div className="mb-6 flex items-center gap-2">
+        <Input
+          type="text"
+          placeholder="Search pages..."
+          value={searchQuery}
+          onChange={handleSearchInputChange}
+          className=" "
+        />
+        <Button onClick={onSearch}
+                variant={'outline'}>
+          Buscar
+        </Button>
+        <Button
+          className=""
+          onClick={() => router.push('/app/pages/new')}
+        >
+          Create Page
+        </Button>
       </div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[50%]">Page Title</TableHead>
+            <TableHead className="md:w-[40%] w-[50%]">Page Title</TableHead>
+            <TableHead className="hidden md:block w-[30%]">Tags</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {pages && pages.map((page) => (
+          {pages && tags && pages.map((page) => (
             <TableRow key={page._id}>
               <TableCell className="font-medium">{page.title}</TableCell>
+              <TableCell className={'hidden md:table-cell h-full align-middle'}>
+                <div className={'flex flex-wrap gap-1 items-center'}>{page.tags && page.tags.map(t => {
+                  return <span className={'text-sm bg-green-200 rounded py-1 px-2'} key={t}>{getNameForTagId(t)}</span>
+                })}</div>
+              </TableCell>
               <TableCell className="text-right">
                 {page.shortId && <Button
                     className="mr-2"
@@ -87,7 +122,7 @@ export default function UserPagesList({pages: pagesProp}: { pages?: Page[] }) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleGetQR(page._id)}
+                  onClick={() => handleGetQR(page.shortId || '', page.slug || '')}
                   className="mr-2"
                 >
                   <QrCode className="h-4 w-4"/>
@@ -115,6 +150,12 @@ export default function UserPagesList({pages: pagesProp}: { pages?: Page[] }) {
           ))}
         </TableBody>
       </Table>
+      <QRCodeModal
+        filename={qrPageUrl?.filename}
+        url={qrPageUrl?.url || ''}
+        isOpen={!!qrPageUrl}
+        onClose={() => setQrPageUrl(null)}
+      />
       <ConfirmationModal
         loading={deleteIsPending}
         isOpen={!!pageToDelete}

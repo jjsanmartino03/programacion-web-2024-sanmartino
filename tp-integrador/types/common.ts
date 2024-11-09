@@ -1,4 +1,5 @@
 import {ObjectId} from "bson";
+import {WithId} from "mongodb";
 
 export interface PageWithObjectId {
   _id: ObjectId
@@ -8,6 +9,7 @@ export interface PageWithObjectId {
   markdown: string
   isPublic: boolean
   shortId?: string
+  tags: string[]
   slug: string
 }
 
@@ -19,6 +21,7 @@ export interface Page {
   markdown: string
   isPublic: boolean
   shortId?: string
+  tags: string[]
   slug: string
 }
 
@@ -34,4 +37,11 @@ export interface CustomSession {
 export interface User {
   _id: ObjectId
   email: string
+}
+
+export type TagWithObjectId = WithId<Tag>
+
+export interface Tag {
+  name: string
+  _id: string
 }
