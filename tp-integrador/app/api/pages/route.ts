@@ -7,6 +7,7 @@ import {ObjectId} from "bson";
 import {CreatePageSchema} from "@/schemas/common";
 import * as z from 'zod'
 import {nanoid} from "nanoid";
+import {generateUniqueSlug} from "@/app/api/pages/generate-slug";
 
 export const getPagesFromCurrentUser = async (): Promise<Page[]> => {
   const session: CustomSession | null = await getServerSession(authOptions);
@@ -24,7 +25,7 @@ export const getPagesFromCurrentUser = async (): Promise<Page[]> => {
     return pages.map(page => {
       return {
         ...page,
-        id: page._id.toString(),
+        _id: page._id.toString(),
         userId: page.userId.toString()
       }
     });
@@ -43,15 +44,17 @@ export const POST = async (request: Request) => {
   const db = await clientPromise;
   const pageData = await request.json();
 
-  let page: z.infer<typeof CreatePageSchema>
+  let page: z.infer<typeof CreatePageSchema>;
   try {
-    page = CreatePageSchema.parse(pageData)
+    page = CreatePageSchema.parse(pageData);
   } catch (e) {
-    console.error(e)
+    console.error(e);
     return NextResponse.json({error: 'Datos incorrectos', detail: e}, {
       status: 400,
     });
   }
+
+  const slug = await generateUniqueSlug(page.title);
 
   const result = await db
     .db()
@@ -59,12 +62,12 @@ export const POST = async (request: Request) => {
     .insertOne({
       ...page,
       shortId: nanoid(10),
-      userId: new ObjectId(session.user.id)
+      userId: new ObjectId(session.user.id),
+      slug,
     });
 
   return NextResponse.json(result, {status: 200});
-}
-
+};
 export const GET = async () => {
   const session: CustomSession | null = await getServerSession(authOptions);
 
@@ -82,14 +85,13 @@ export const GET = async () => {
 
   return NextResponse.json(pages, {status: 200});
 }
-
-export const getPageByShortId = async (shortId: string): Promise<Page | null> => {
+export const getOnePageBy = async (params: Partial<PageWithObjectId>) => {
   const db = await clientPromise;
 
   const page = await db
     .db()
     .collection<PageWithObjectId>("pages")
-    .findOne({shortId});
+    .findOne(params);
 
   if (!page) {
     return null;
@@ -100,4 +102,15 @@ export const getPageByShortId = async (shortId: string): Promise<Page | null> =>
     _id: page._id.toString(),
     userId: page.userId.toString()
   };
+}
+export const getPageByShortId = async (shortId: string): Promise<Page | null> => {
+  return getOnePageBy({shortId});
+}
+
+export const getPageById = async (id: string): Promise<Page | null> => {
+  return getOnePageBy({_id: new ObjectId(id)});
+}
+
+export const getPageBySlug = async (slug: string): Promise<Page | null> => {
+  return getOnePageBy({slug});
 }

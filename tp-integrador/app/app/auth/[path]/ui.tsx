@@ -32,7 +32,7 @@ export default function LoginPage({type}: { type: 'signin' | 'signup' }) {
       // Handle error (e.g., show error message)
       console.error(result.error)
     } else {
-      router.push('/app/dashboard') // Redirect to dashboard on successful login
+      router.push('/app/pages') // Redirect to dashboard on successful login
     }
   }
 

@@ -33,15 +33,32 @@ lo que sea. Incluso un QR para identificar a una mascota.
 ## Tareas
 - [x] Crear el proyecto
 - [ ] Crear el layout
-- [ ] Conectar NextAuth
-- [ ] Hacer entidades y conectarse a MongoDB
-- [ ] Crear el formulario de login
-- [ ] Crear el formulario de registro
+- [x] Conectar NextAuth
+- [x] Hacer entidades y conectarse a MongoDB
+- [x] Crear el formulario de login
+- [x] Crear el formulario de registro
 - [ ] Funcionalidad de login con Google
-- [ ] Funcionalidad de short url
+- [x] Funcionalidad de short url
 - [ ] Crear el formulario de creación y edición de página
 - [ ] Crear el listado de páginas
 - [ ] Crear la página de visualización de página
+
+### Tareas bajo nivel 9/11  
+- [x] Agregar editor de markdown
+- [x] Agregar la funcionalidad de eliminar una página
+- [ ] Asignarle un slug a una página, y redirigir a esta luego de
+    acceder al shortLink
+- [ ] Embellecer la previsualización de una página
+- [ ] Agregar la funcionalidad de descarga de QR
+- [ ] Crear entidad carpetas para las páginas. Se puede guardar una
+carpeta dentro de otra, y así sucesivamente. Esto para que el usuario
+pueda organizar sus páginas.
+- [ ] Actualizar el listado de páginas para usar carpetas
+- [ ] Agregar templates para cada página, para embellecer la visualización
+- [ ] Agregar layout para mejorar la interfaz
+- [ ] Guardar número de visitas de cáda página
+- [ ] Listar páginas públicas al inicio
+- [ ] Login con Google
 
 ## Entidades
 - User

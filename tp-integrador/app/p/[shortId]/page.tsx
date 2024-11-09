@@ -1,5 +1,6 @@
 import {getPageByShortId} from "@/app/api/pages/route";
 import NotFound from "next/dist/client/components/not-found-error";
+import {redirect} from "next/navigation";
 
 export default async function Page({
                                      params
@@ -14,10 +15,6 @@ export default async function Page({
     return <NotFound/>
   }
 
-  return (
-    <div>
-      <h1>{page.title}</h1>
-      <img src={page.imageUrl} alt={page.title}/>
-    </div>
-  )
+  // redirect to '/pages/[slug]' if the page has a slug
+  redirect(`/pages/${page.slug}`)
 }
