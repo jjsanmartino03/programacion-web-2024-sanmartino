@@ -13,8 +13,9 @@ import {Page} from "@/types/common"
 import MarkdownEditor from '@/components/markdwon'
 import ConfirmationModal from "@/components/modals/confirmation";
 import TagSelector from '@/components/tags/selector';
+import {pageLinks} from "@/utils/pages";
 
-export default function PageForm({ pageData }: { pageData?: Page }) {
+export default function PageForm({pageData}: { pageData?: Page }) {
   const [title, setTitle] = useState(pageData?.title || '');
   const [markdown, setMarkdown] = useState(pageData?.markdown || '');
   const [imageUrl, setImageUrl] = useState(pageData?.imageUrl || '');
@@ -24,7 +25,7 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
   const createMutation = useCreatePageMutation();
   const updateMutation = useUpdatePageMutation();
   const [pageToDelete, setPageToDelete] = useState<string | null>(null);
-  const { isPending: deleteIsPending, ...deleteMutation } = useDeletePageMutation();
+  const {isPending: deleteIsPending, ...deleteMutation} = useDeletePageMutation();
 
   const handleDelete = (id: string) => {
     setPageToDelete(id);
@@ -35,7 +36,7 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
       deleteMutation.mutate(pageToDelete, {
         onSuccess: async () => {
           setPageToDelete(null);
-          router.push('/app/pages');
+          router.push(pageLinks.myPages);
         },
       });
     }
@@ -51,24 +52,26 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
     }
   }, [pageData]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !markdown) {
       toast({
         title: "Error",
-        description: "Title and markdown are required.",
+        description: "El título y el contenido son requeridos",
         variant: "destructive",
       });
       return;
     }
 
-    const pagePayload = { title, markdown, imageUrl, isPublic, tags: selectedTags };
+    const pagePayload = {title, markdown, imageUrl, isPublic, tags: selectedTags};
 
     if (pageData?._id) {
-      updateMutation.mutate({ ...pagePayload, _id: pageData._id });
+      await updateMutation.mutateAsync({...pagePayload, _id: pageData._id});
     } else {
-      createMutation.mutate(pagePayload);
+      await createMutation.mutateAsync(pagePayload);
     }
+
+    router.push(pageLinks.myPages)
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +95,7 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
         console.error('Upload failed:', error);
         toast({
           title: "Error",
-          description: "Image upload failed. Please try again.",
+          description: "Carga de imagen fallida. Inténtelo nuevamente.",
           variant: "destructive",
         });
       }
@@ -101,28 +104,29 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
 
   return (
     <div className="container mx-auto px-4 py-16 max-w-2xl">
-      <h1 className="text-3xl font-bold mb-8">{pageData ? 'Edit Page' : 'Create New Page'}</h1>
-      <p className="text-muted-foreground mb-8">Fill in the details to {pageData ? 'update' : 'create'} your QR-linked page.</p>
+      <h1 className="text-3xl font-bold mb-8">{pageData ? 'Actualizar Página' : 'Crear nueva página'}</h1>
+      <p className="text-muted-foreground mb-8">Llena el formulario para {pageData ? 'actualizar' : 'crear'} tu página
+        propia.</p>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title">Título</Label>
           <Input
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter page title"
+            placeholder="Ingrese el título"
             required
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="markdown">Markdown (Markdown)</Label>
+          <Label htmlFor="markdown">Contenido (Markdown)</Label>
           <MarkdownEditor
             value={markdown}
             onChange={setMarkdown}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="image">Preview Image</Label>
+          <Label htmlFor="image">Previsualización de imagen</Label>
           <Input
             id="image"
             type="file"
@@ -130,12 +134,13 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
             accept="image/*"
           />
           {imageUrl && (
-            <img src={imageUrl} alt="Preview" className="mt-2 rounded-md max-w-full h-auto" />
+            <img src={imageUrl} alt="Preview" className="mt-2 rounded-md max-w-full h-auto"/>
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="tags">Tags</Label>
+          <Label htmlFor="tags">Etiquetas</Label>
           <TagSelector
+            shouldCreateTag
             selectedTags={selectedTags}
             onChange={setSelectedTags}
           />
@@ -146,11 +151,11 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
             checked={isPublic}
             onCheckedChange={setIsPublic}
           />
-          <Label htmlFor="public">Make this page public</Label>
+          <Label htmlFor="public">Publicar esta página en el feed</Label>
         </div>
         <div className="flex justify-between pt-6">
           <Button type="button" variant="outline" onClick={() => router.back()}>
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back
+            <ArrowLeft className="mr-2 h-4 w-4"/> Back
           </Button>
           <div className={'flex gap-2'}>
             {pageData && <Button
@@ -158,16 +163,16 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
                 type={'button'}
                 onClick={() => handleDelete(pageData._id)}
             >
-                <span>Delete</span>
+                <span>Eliminar</span>
             </Button>}
             <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
               {(createMutation.isPending || updateMutation.isPending) ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {pageData ? 'Updating...' : 'Creating...'}
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+                  {pageData ? 'Actualizando...' : 'Creando...'}
                 </>
               ) : (
-                pageData ? 'Update Page' : 'Create Page'
+                pageData ? 'Actualizar' : 'Crear'
               )}
             </Button>
           </div>
@@ -178,8 +183,8 @@ export default function PageForm({ pageData }: { pageData?: Page }) {
         isOpen={!!pageToDelete}
         onClose={() => setPageToDelete(null)}
         onConfirm={confirmDelete}
-        title="Delete Page"
-        description="Are you sure you want to delete this page? This action cannot be undone."
+        title="Eliminar página"
+        description="¿Estas seguro de que quieres eliminar esta página?"
       />
     </div>
   );

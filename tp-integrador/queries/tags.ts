@@ -1,7 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import axios from "axios";
-import { Tag } from "@/types/common";
-import { toast } from "@/hooks/use-toast";
+import {Tag} from "@/types/common";
+import {toast} from "@/hooks/use-toast";
 
 export const useTagsQuery = (tags?: Tag[]) => useQuery<Tag[]>({
   queryKey: ['tags'],
@@ -14,7 +14,7 @@ export const useTagsQuery = (tags?: Tag[]) => useQuery<Tag[]>({
 
 export const useTagMutation = () => useMutation({
   mutationFn: async (tagData: Omit<Tag, '_id'>) => {
-    const response = await axios.post<{insertedId:string}>('/api/tags', tagData, {
+    const response = await axios.post<{ insertedId: string }>('/api/tags', tagData, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -24,13 +24,13 @@ export const useTagMutation = () => useMutation({
   onSuccess: () => {
     toast({
       title: "Success",
-      description: "Your tag has been created.",
+      description: "Su etiqueta ha sido creada."
     });
   },
   onError: () => {
     toast({
       title: "Error",
-      description: "Failed to create tag. Please try again.",
+      description: "Error al crear la etiqueta. Inténtelo nuevamente.",
       variant: "destructive",
     });
   },

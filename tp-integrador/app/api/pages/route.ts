@@ -38,6 +38,7 @@ export const POST = async (request: Request) => {
       ...page,
       shortId: nanoid(10),
       userId: new ObjectId(session.user.id),
+      authorEmail: session.user.email,
       slug,
     });
 
@@ -48,23 +49,25 @@ export const GET = async (req: NextRequest) => {
   // get query params
   const url = new URL(req.url);
   const queryParams = url.searchParams;
-
   const keyword = queryParams.get('keyword');
+  const isPublic = queryParams.get('public') ? queryParams.get('public') === 'true' : false;
+  const tags = queryParams.getAll('tags[]');
+  console.log(queryParams);
 
-  if (!session) {
+  if (!session && !isPublic) {
     return NextResponse.json({error: "Unauthorized"}, {status: 401});
   }
-
   const db = await clientPromise;
-
+  console.log(tags);
   const pages = await db
     .db()
     .collection<PageWithObjectId>("pages")
     .find({
-      userId: new ObjectId(session.user.id),
-      ...(keyword && {title: new RegExp(keyword, 'i')})
-    }).
-    sort({title: 1})
+      ...(!isPublic && {userId: new ObjectId(session?.user?.id)}),
+      ...(keyword && {title: new RegExp(keyword, 'i')}),
+      ...(tags && tags.length && {tags: {$in: tags}}),
+      ...(isPublic && {isPublic: true})
+    }).sort({title: 1})
     .toArray();
 
   return NextResponse.json(pages, {status: 200});

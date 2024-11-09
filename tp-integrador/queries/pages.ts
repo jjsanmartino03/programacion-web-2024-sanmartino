@@ -3,14 +3,18 @@ import axios from "axios";
 import {Page} from "@/types/common";
 import {toast} from "@/hooks/use-toast";
 
-export const usePagesQuery = (keyword: string, defaultPages?: Page[]) => useQuery<Page[]>({
-  queryKey: ['pages', keyword],
+type PagesQueryParams = {
+  keyword?: string
+  public?: boolean
+  tags?: string[]
+}
+
+export const usePagesQuery = (params: PagesQueryParams, defaultPages?: Page[]) => useQuery<Page[]>({
+  queryKey: ['pages', params],
   initialData: defaultPages,
   queryFn: async () => {
     const response = await axios.get(`/api/pages`, {
-      params: {
-        keyword
-      }
+      params: params
     });
     return response.data;
   }
@@ -26,13 +30,13 @@ export const useCreatePageMutation = () => useMutation({
   onSuccess: () => {
     toast({
       title: "Success",
-      description: "Your page has been created.",
+      description: "Su página ha sido creada.",
     });
   },
   onError: () => {
     toast({
       title: "Error",
-      description: "Failed to create page. Please try again.",
+      description: "Error al crear la página. Inténtelo nuevamente.",
       variant: "destructive",
     });
   },
@@ -48,13 +52,13 @@ export const useUpdatePageMutation = () => useMutation({
   onSuccess: () => {
     toast({
       title: "Success",
-      description: "Your page has been updated.",
+      description: "Su página ha sido actualizada.",
     });
   },
   onError: () => {
     toast({
       title: "Error",
-      description: "Failed to update page. Please try again.",
+      description: "Error al actualizar la página. Inténtelo nuevamente.",
       variant: "destructive",
     });
   },
@@ -70,13 +74,13 @@ export const useDeletePageMutation = () => useMutation({
   onSuccess: () => {
     toast({
       title: "Success",
-      description: "Your page has been deleted.",
+      description: "Página eliminada con éxito.",
     });
   },
   onError: () => {
     toast({
       title: "Error",
-      description: "Failed to delete page. Please try again.",
+      description: "Error al eliminar la página. Inténtelo nuevamente.",
       variant: "destructive",
     });
   },

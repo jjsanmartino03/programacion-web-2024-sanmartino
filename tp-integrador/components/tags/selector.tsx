@@ -8,9 +8,10 @@ import { Tag } from '@/types/common';
 type TagSelectorProps = {
   selectedTags: string[];
   onChange: (tags: string[]) => void;
+  shouldCreateTag?: boolean;
 };
 
-export default function TagSelector({ selectedTags, onChange }: TagSelectorProps) {
+export default function TagSelector({ selectedTags, onChange, shouldCreateTag }: TagSelectorProps) {
   const { data: tags, refetch: refetchTags } = useTagsQuery();
   const { mutate: createTag } = useTagMutation();
   const [query, setQuery] = useState('');
@@ -23,6 +24,7 @@ export default function TagSelector({ selectedTags, onChange }: TagSelectorProps
       );
 
   const handleSelect = (selectedTag: Tag | string) => {
+    if (!selectedTag) return;
     if (typeof selectedTag === 'string') {
       // Create new tag
       createTag({ name: selectedTag }, {
@@ -35,6 +37,7 @@ export default function TagSelector({ selectedTags, onChange }: TagSelectorProps
       // Select existing tag
       if (!selectedTags.includes(selectedTag._id)) {
         onChange([...selectedTags, selectedTag._id]);
+        setQuery('')
       }
     }
   };
@@ -44,7 +47,7 @@ export default function TagSelector({ selectedTags, onChange }: TagSelectorProps
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 flex flex-col justify-center">
       <Combobox onChange={handleSelect}>
         <div className="relative">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
@@ -90,7 +93,7 @@ export default function TagSelector({ selectedTags, onChange }: TagSelectorProps
                 )}
               </Combobox.Option>
             ))}
-            {query !== '' && !filteredTags?.some(tag => tag.name.toLowerCase() === query.toLowerCase()) && (
+            {shouldCreateTag && query !== '' && !filteredTags?.some(tag => tag.name.toLowerCase() === query.toLowerCase()) && (
               <Combobox.Option
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${

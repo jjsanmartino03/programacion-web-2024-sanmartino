@@ -13,10 +13,10 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({value, onChange}) => {
     <div>
       <div className="flex justify-between mb-2">
         <button type="button" onClick={() => setIsPreview(false)} className={!isPreview ? 'font-bold' : ''}>
-          Edit
+          Editar
         </button>
         <button type="button" onClick={() => setIsPreview(true)} className={isPreview ? 'font-bold' : ''}>
-          Preview
+          Vista previa
         </button>
       </div>
       {isPreview ? (

@@ -36,14 +36,14 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({filename, url, isOpen, onClose
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>QR Code</DialogTitle>
+          <DialogTitle>Código QR</DialogTitle>
         </DialogHeader>
         <div className="flex justify-center my-4">
           <QRCodeSVG ref={ref} value={url} size={256} />
         </div>
         <DialogFooter>
-          <Button onClick={downloadQR}>Download QR</Button>
-          <Button variant="ghost" onClick={onClose}>Close</Button>
+          <Button onClick={downloadQR}>Descargar QR</Button>
+          <Button variant="ghost" onClick={onClose}>Cerrar</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

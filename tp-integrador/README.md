@@ -37,11 +37,11 @@ lo que sea. Incluso un QR para identificar a una mascota.
 - [x] Hacer entidades y conectarse a MongoDB
 - [x] Crear el formulario de login
 - [x] Crear el formulario de registro
-- [ ] Funcionalidad de login con Google
+- [-] Funcionalidad de login con Google
 - [x] Funcionalidad de short url
-- [ ] Crear el formulario de creación y edición de página
-- [ ] Crear el listado de páginas
-- [ ] Crear la página de visualización de página
+- [x] Crear el formulario de creación y edición de página
+- [x] Crear el listado de páginas
+- [x] Crear la página de visualización de página
 
 ### Tareas bajo nivel 9/11  
 - [x] Agregar editor de markdown
@@ -52,14 +52,17 @@ lo que sea. Incluso un QR para identificar a una mascota.
 - [x] Agregar la funcionalidad de descarga de QR
 - [x] Crear entidad categorías para las páginas.
 - [x] Actualizar el listado de páginas para usar categorías
-- [ ] Deployar en Vercel
+- [x] Deployar en Vercel
+- [x] No permitir usuarios no autorizados
+- [x] Agregar layout para mejorar la interfaz
+- [x] Agregar colores, y logo
+- [x] Listar páginas públicas al inicio
+- [x] Traducir todo al español
+- [x] Título de cada página
 - [ ] Agregar templates para cada página, para embellecer la visualización
-- [ ] Agregar layout para mejorar la interfaz
-- [ ] Guardar número de visitas de cáda página
-- [ ] Listar páginas públicas al inicio
-- [ ] Traducir todo al español
-- [ ] Título de cada página
-- [ ] Login con Google
+- [ ] Que el link se pueda copiar, que no te lleve directamente
+- [ ] (NO) Login con Google
+- [ ] (NO) Guardar número de visitas de cáda página
 
 ## Entidades
 - User

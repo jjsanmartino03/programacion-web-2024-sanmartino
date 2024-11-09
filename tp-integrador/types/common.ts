@@ -9,6 +9,7 @@ export interface PageWithObjectId {
   markdown: string
   isPublic: boolean
   shortId?: string
+  authorEmail?:string
   tags: string[]
   slug: string
 }
@@ -21,6 +22,7 @@ export interface Page {
   markdown: string
   isPublic: boolean
   shortId?: string
+  authorEmail?: string
   tags: string[]
   slug: string
 }
