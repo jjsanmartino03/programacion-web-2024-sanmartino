@@ -43,7 +43,7 @@ export default function Feed() {
       </div>
 
       <div className=" flex flex-col flex-wrap gap-2 items pl-0 p-4">
-        <span>Etiquetas:</span>
+        <span>Etiquetas (filtra los tipos de página existentes)</span>
         <TagSelector shouldCreateTag={false} selectedTags={selectedTags} onChange={setSelectedTags}/>
       </div>
 

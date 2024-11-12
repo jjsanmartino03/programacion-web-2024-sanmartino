@@ -138,7 +138,7 @@ export default function PageForm({pageData}: { pageData?: Page }) {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="tags">Etiquetas</Label>
+          <Label htmlFor="tags">Etiquetas (sirven para filtrar la página en el feed)</Label>
           <TagSelector
             shouldCreateTag
             selectedTags={selectedTags}
