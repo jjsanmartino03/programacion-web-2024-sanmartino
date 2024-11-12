@@ -1,4 +1,5 @@
 # MeWeb
+![image](https://github.com/user-attachments/assets/6434928a-c97e-49f6-bc8f-97898a64a758)
 
 ## Descripción General del Proyecto
 
@@ -18,6 +19,9 @@ El listado de páginas privadas permite a los usuarios ver todas las páginas qu
 
 ## Arquitectura de la Aplicación
 
+![Untitled](https://github.com/user-attachments/assets/aff409ad-81f1-4b0a-8e15-0a2d561f9ce5)
+
+
 La aplicación está construida utilizando Next.js como framework principal, lo que permite una gestión eficiente de las páginas y rutas. Los componentes de la interfaz de usuario están desarrollados con React y estilizados con TailwindCSS para asegurar un diseño responsivo y moderno. La autenticación de usuarios se maneja mediante NextAuth.js, y se utilizan componentes de interfaz de usuario de shadcn/ui.
 
 En el backend, las rutas API de Next.js se utilizan para manejar las solicitudes, mientras que NextAuth.js gestiona el registro, inicio de sesión y cierre de sesión de los usuarios. La base de datos utilizada es MongoDB, que almacena la información de los usuarios y las páginas. Para el almacenamiento y gestión de imágenes, se utiliza Cloudinary.
@@ -33,4 +37,7 @@ Esta arquitectura permite una aplicación escalable y mantenible, con una clara 
 ## Desarrollo
 El tiempo utilizado para el diseño e implementación de la aplicación fue el siguiente:
 - Análisis y diseño: 2 horas
-- Implementación de autenticación
+- Implementación de autenticación: 2 horas
+- Conexión a base de datos y CRUD de páginas: 5 horas
+- Agregado de navegación y mejoras en la interfaz: 2 horas
+- Corrección de errores: 1 horas
